@@ -2,7 +2,12 @@ package Database;
 
 import java.sql.*;
 
-public class AccountTable {
+public final class AccountTable {
+
+    private AccountTable() {
+
+    }
+
     public static boolean insert(Integer aid, String username, String firstName, String lastName, String password, Date date, String address) {
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cookingsite", "root", "root");
