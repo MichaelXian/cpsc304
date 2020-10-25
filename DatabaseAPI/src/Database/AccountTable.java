@@ -4,8 +4,7 @@ import java.sql.*;
 
 public class AccountTable {
     public static boolean insert(Integer aid, String username, String firstName, String lastName, String password, Date date, String address) {
-        try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cookingsite", "root", "root");
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cookingsite", "root", "root")) {
             String personalInfoQuery = "INSERT INTO PersonalInfo VALUES(?, ?, ?, ?)";
             PreparedStatement personalInfoStatement = getPersonalInfoStatement(personalInfoQuery, firstName, lastName, date, address, connection);
             String accountInsertQuery = "INSERT INTO Account VALUES(?, ?, ?, ?, ?)";
