@@ -2,6 +2,8 @@ package Database;
 
 import java.sql.*;
 
+import static Database.PersonalInfoTable.getPersonalInfoStatement;
+
 public final class AccountTable {
 
     private AccountTable() {
@@ -22,15 +24,6 @@ public final class AccountTable {
             return false;
         }
         return true;
-    }
-
-    private static PreparedStatement getPersonalInfoStatement(String query, String firstName, String lastName, Date date, String address, Connection connection) throws SQLException {
-        PreparedStatement personalInfoStatement = connection.prepareStatement(query);
-        personalInfoStatement.setString(1, firstName);
-        personalInfoStatement.setString(2, lastName);
-        personalInfoStatement.setDate(3, date);
-        personalInfoStatement.setString(4, address);
-        return personalInfoStatement;
     }
 
     private static PreparedStatement getAccountStatement(String query, Connection connection, Integer aid, String username, String firstName, String lastName, String password) throws SQLException {
