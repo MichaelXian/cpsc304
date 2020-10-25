@@ -1,8 +1,10 @@
 package Database;
 
+import Database.Statements.Val;
+
 import java.sql.*;
 
-import static Database.PersonalInfoTable.getPersonalInfoStatement;
+import static Database.Statements.StatementFactory.getStatement;
 
 public final class AccountTable {
 
@@ -12,10 +14,18 @@ public final class AccountTable {
 
     public static boolean insert(Integer aid, String username, String firstName, String lastName, String password, Date date, String address) {
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cookingsite", "root", "root")) {
+
+            // Setup PersonalInfo Query
             String personalInfoQuery = "INSERT INTO PersonalInfo VALUES(?, ?, ?, ?)";
-            PreparedStatement personalInfoStatement = getPersonalInfoStatement(personalInfoQuery, firstName, lastName, date, address, connection);
+            Val[] personalInfoVals = {new Val(firstName), new Val(lastName), new Val(date), new Val(date), new Val(address)};
+            PreparedStatement personalInfoStatement = getStatement(connection, personalInfoQuery, personalInfoVals);
+
+            // Setup AccountInsert Query
             String accountInsertQuery = "INSERT INTO Account VALUES(?, ?, ?, ?, ?)";
-            PreparedStatement accountStatement = getAccountStatement(accountInsertQuery, connection, aid, username, firstName, lastName, password);
+            Val[] accountVals = {new Val(aid), new Val(username), new Val(firstName), new Val(lastName), new Val(password)};
+            PreparedStatement accountStatement = getStatement(connection, accountInsertQuery, accountVals);
+
+            // Execute Queries
             personalInfoStatement.execute();
             accountStatement.execute();
         } catch (Exception e) {
@@ -26,13 +36,4 @@ public final class AccountTable {
         return true;
     }
 
-    private static PreparedStatement getAccountStatement(String query, Connection connection, Integer aid, String username, String firstName, String lastName, String password) throws SQLException {
-        PreparedStatement accountStatement = connection.prepareStatement(query);
-        accountStatement.setInt(1, aid);
-        accountStatement.setString(2, username);
-        accountStatement.setString(3, firstName);
-        accountStatement.setString(4, lastName);
-        accountStatement.setString(5, password);
-        return accountStatement;
-    }
 }
