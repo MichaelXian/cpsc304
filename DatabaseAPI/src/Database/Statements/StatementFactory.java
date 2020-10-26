@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import static java.sql.Types.NULL;
+
 public final class StatementFactory {
 
     private StatementFactory() {
@@ -20,6 +22,10 @@ public final class StatementFactory {
                 statement.setString(i, vals[i].getStr());
             } else if (vals[i].getClazz() == Date.class) {
                 statement.setDate(i, vals[i].getDate());
+            } else if (vals[i].getClazz() == null) {
+                statement.setNull(i, NULL);
+            } else {
+                throw new RuntimeException("Value has unknown type");
             }
         }
         return statement;

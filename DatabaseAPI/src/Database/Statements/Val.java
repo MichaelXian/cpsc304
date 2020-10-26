@@ -8,6 +8,10 @@ public class Val {
     private Date date;
     private Class clazz;
 
+    public Val() {
+        this.clazz = null;
+    }
+
     public Val(Integer integer) {
         this.integer = integer;
         this.clazz = Integer.class;

@@ -13,7 +13,7 @@ public final class AccountTable {
     }
 
     public static boolean insert(Integer aid, String username, String firstName, String lastName, String password, Date date, String address) {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cookingsite", "root", "root")) {
+        try (Connection connection = ConnectionFactory.createConnection()) {
 
             // Setup PersonalInfo Query
             String personalInfoQuery = "INSERT INTO PersonalInfo VALUES(?, ?, ?, ?)";
