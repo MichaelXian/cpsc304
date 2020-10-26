@@ -15,16 +15,19 @@ public class Val {
     public Val(Integer integer) {
         this.integer = integer;
         this.clazz = Integer.class;
+        checkNull(integer);
     }
 
     public Val(String str) {
         this.str = str;
         this.clazz = String.class;
+        checkNull(str);
     }
 
     public Val(Date date) {
         this.date = date;
         this.clazz = Date.class;
+        checkNull(date);
     }
 
     public Integer getInteger() {
@@ -46,6 +49,12 @@ public class Val {
             throw new RuntimeException("Asked for Date in non-date value");
         }
         return date;
+    }
+
+    private void checkNull(Object o) {
+        if (o == null) {
+            this.clazz = null;
+        }
     }
 
     public Class getClazz() {

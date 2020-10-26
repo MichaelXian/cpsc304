@@ -5,6 +5,7 @@ import Database.Statements.Val;
 import java.sql.*;
 
 import static Database.Statements.StatementFactory.getStatement;
+import static Database.Statements.ValFactory.val;
 
 public final class AccountTable {
 
@@ -17,13 +18,11 @@ public final class AccountTable {
 
             // Setup PersonalInfo Query
             String personalInfoQuery = "INSERT INTO PersonalInfo VALUES(?, ?, ?, ?)";
-            Val[] personalInfoVals = {new Val(firstName), new Val(lastName), new Val(date), new Val(date), new Val(address)};
-            PreparedStatement personalInfoStatement = getStatement(connection, personalInfoQuery, personalInfoVals);
+            PreparedStatement personalInfoStatement = getStatement(connection, personalInfoQuery, val(firstName), val(lastName), val(date), val(address));
 
             // Setup AccountInsert Query
             String accountInsertQuery = "INSERT INTO Account VALUES(?, ?, ?, ?, ?)";
-            Val[] accountVals = {new Val(aid), new Val(username), new Val(firstName), new Val(lastName), new Val(password)};
-            PreparedStatement accountStatement = getStatement(connection, accountInsertQuery, accountVals);
+            PreparedStatement accountStatement = getStatement(connection, accountInsertQuery, val(aid), val(username), val(firstName), val(lastName), val());
 
             // Execute Queries
             personalInfoStatement.execute();

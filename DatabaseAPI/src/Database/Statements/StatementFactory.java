@@ -13,7 +13,7 @@ public final class StatementFactory {
 
     }
 
-    public static PreparedStatement getStatement(Connection conn, String query, Val[] vals) throws SQLException {
+    public static PreparedStatement getStatement(Connection conn, String query, Val... vals) throws SQLException {
         PreparedStatement statement = conn.prepareStatement(query);
         for (int i = 0; i < vals.length; i++) {
             if (vals[i].getClazz() == Integer.class) {
