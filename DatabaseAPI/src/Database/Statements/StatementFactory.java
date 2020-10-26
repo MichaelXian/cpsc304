@@ -17,13 +17,13 @@ public final class StatementFactory {
         PreparedStatement statement = conn.prepareStatement(query);
         for (int i = 0; i < vals.length; i++) {
             if (vals[i].getClazz() == Integer.class) {
-                statement.setInt(i, vals[i].getInteger());
+                statement.setInt(i + 1, vals[i].getInteger());
             } else if (vals[i].getClazz() == String.class) {
-                statement.setString(i, vals[i].getStr());
+                statement.setString(i + 1, vals[i].getStr());
             } else if (vals[i].getClazz() == Date.class) {
-                statement.setDate(i, vals[i].getDate());
+                statement.setDate(i + 1, vals[i].getDate());
             } else if (vals[i].getClazz() == null) {
-                statement.setNull(i, NULL);
+                statement.setNull(i + 1, NULL);
             } else {
                 throw new RuntimeException("Value has unknown type");
             }
