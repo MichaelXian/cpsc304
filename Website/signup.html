@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <form>
+        <input id="aid" type="number" placeholder="aid"> <br>
+        <input id="username" type="text" placeholder="username"> <br>
+        <input id="first_name" type="text" placeholder="first name"> <br>
+        <input id="last_name" type="text" placeholder="last name"> <br>
+        <input id="password" type="text" placeholder="password"> <br>
+        <input id="date_of_birth" type="number" placeholder="date of birth as milliseconds from epoch"> <br>
+        <input id="address" type="text" placeholder="address"> <br>
+    </form>
+    <button id="submit" onclick="signup()">Submit</button>
+
+    <script>
+        url = "http://localhost:8080/create-account?"
+        function signup() {
+            let data = {
+                aid: document.getElementById("aid").value,
+                username: document.getElementById("username").value,
+                first_name: document.getElementById("first_name").value,
+                last_name: document.getElementById("last_name").value,
+                password: document.getElementById("password").value,
+                date_of_birth: document.getElementById("date_of_birth").value,
+                address: document.getElementById("address").value
+            }
+            url = url + serialize(data);
+            console.log(url);
+            console.log($.get(url));
+        }
+        
+        serialize = function(obj) {
+        var str = [];
+        for (var p in obj)
+            if (obj.hasOwnProperty(p)) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+        return str.join("&");
+        }
+    </script>
+</body>
+
+</html>

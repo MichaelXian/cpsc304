@@ -22,7 +22,10 @@ public final class AccountTable {
                     .str(password).build();
 
             // Insert PersonalInfo
-            PersonalInfoTable.insert(firstName, lastName, date_of_birth, address);
+            if (!PersonalInfoTable.insert(firstName, lastName, date_of_birth, address)) {
+                // If failed to insert PersonalInfo, exit
+                return false;
+            }
 
             // Execute Account insert
             accountStatement.execute();
