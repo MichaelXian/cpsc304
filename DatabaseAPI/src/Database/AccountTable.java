@@ -1,11 +1,8 @@
 package Database;
 
-import Database.Statements.Val;
+import Database.Statements.StatementBuilder;
 
 import java.sql.*;
-
-import static Database.Statements.StatementFactory.getStatement;
-import static Database.Statements.ValFactory.val;
 
 public final class AccountTable {
 
@@ -13,20 +10,21 @@ public final class AccountTable {
 
     }
 
-    public static boolean insert(Integer aid, String username, String firstName, String lastName, String password, Date date, String address) {
+    public static boolean insert(Integer aid, String username, String firstName, String lastName, String password, Date date_of_birth, String address) {
         try (Connection connection = ConnectionFactory.createConnection()) {
-
-            // TODO: Builder would probably be better
-            // Setup PersonalInfo Query
-            String personalInfoQuery = "INSERT INTO PersonalInfo VALUES(?, ?, ?, ?)";
-            PreparedStatement personalInfoStatement = getStatement(connection, personalInfoQuery, val(firstName), val(lastName), val(date), val(address));
-
             // Setup AccountInsert Query
             String accountInsertQuery = "INSERT INTO Account VALUES(?, ?, ?, ?, ?)";
-            PreparedStatement accountStatement = getStatement(connection, accountInsertQuery, val(aid), val(username), val(firstName), val(lastName), val(password));
+            PreparedStatement accountStatement = new StatementBuilder(connection, accountInsertQuery)
+                    .integer(aid)
+                    .str(username)
+                    .str(firstName)
+                    .str(lastName)
+                    .str(password).build();
 
-            // Execute Queries
-            personalInfoStatement.execute();
+            // Insert PersonalInfo
+            PersonalInfoTable.insert(firstName, lastName, date_of_birth, address);
+
+            // Execute Account insert
             accountStatement.execute();
         } catch (Exception e) {
             e.printStackTrace();
