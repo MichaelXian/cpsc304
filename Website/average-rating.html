@@ -11,15 +11,19 @@
 </head>
 
 <body>
-    <h1>Get the average overall rating of all recipes</h1>
+    <h1>Get the average rating of recipes of each foodtype</h1>
     <button id="submit" onclick="getAverage()">Get average</button>
+    <br>
+    <textarea id="output" rows=10 cols=100></textarea>
 
     <script>
         function getAverage() {
             url = "http://localhost:8080/average-rating"
             console.log(url);
             console.log($.get(url, function(data) {
-                alert("The average rating of all recipes is: " + data)
+                console.log(data);
+                document.getElementById("output").textContent = data;
+                //alert("The average rating of all recipes is: " + data);
             }));
         }
         

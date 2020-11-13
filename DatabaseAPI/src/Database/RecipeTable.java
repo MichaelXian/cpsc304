@@ -1,8 +1,12 @@
 package Database;
 
 import Database.Statements.StatementBuilder;
+import oracle.ucp.common.waitfreepool.Tuple;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.List;
 
 public class RecipeTable {
 
@@ -40,15 +44,25 @@ public class RecipeTable {
     public static String averageRating() {
         try (Connection connection = ConnectionFactory.createConnection()) {
             String query =
-                    "SELECT AVG(rating)" +
-                    "FROM Recipe";
+                    "SELECT c.typename, AVG(rating) " +
+                    "FROM recipe r, content c, foodtype f " +
+                    "WHERE r.content = c.content AND c.Typename = f.Typename " +
+                    "GROUP BY c.typename";
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
-            if (result.next()) {
-                return result.getString(1);
-            } else {
-                throw new Exception("No result from query");
+            // %-10s pads the argument to 10 characters. (the negative means left-aligned)
+            // Just to make the output look nicer and more like a table
+            // Also too lazy to make it an actual table in the frontend, I'd rather just print out a string
+            // that looks like a table lmao
+            StringBuilder table = new StringBuilder(String.format("\n%-10s%-10s", "FoodType", "Average Rating"));
+            while (result.next()) {
+                String foodtype = result.getString("typename");
+                String rating = result.getString("AVG(rating)");
+                String row = String.format("\n%-10s%-10s", foodtype, rating);
+                table.append(row);
             }
+            System.out.println(table.toString());
+            return table.toString();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
