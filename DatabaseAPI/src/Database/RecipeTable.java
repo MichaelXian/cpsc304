@@ -2,9 +2,7 @@ package Database;
 
 import Database.Statements.StatementBuilder;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
+import java.sql.*;
 
 public class RecipeTable {
 
@@ -39,4 +37,22 @@ public class RecipeTable {
         return true;
     }
 
+    public static String averageRating() {
+        try (Connection connection = ConnectionFactory.createConnection()) {
+            String query =
+                    "SELECT AVG(rating)" +
+                    "FROM Recipe";
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            if (result.next()) {
+                return result.getString(1);
+            } else {
+                throw new Exception("No result from query");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

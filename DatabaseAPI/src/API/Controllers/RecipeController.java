@@ -26,4 +26,10 @@ public class RecipeController {
         return success ? "Success!" : "Failed";
     }
 
+    @GetMapping("/average-rating")
+    @ResponseBody
+    public String getAverageRating() {
+        return RecipeTable.averageRating();
+    }
+
 }
