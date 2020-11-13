@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <form>
+        <input id="rid" type="number" placeholder="rid"> <br>
+        <input id="name" type="text" placeholder="name"> <br>
+        <input id="content" type="text" placeholder="content"> <br>
+        <input id="cooking_time" type="text" placeholder="cooking_time"> <br>
+        <input id="rating" type="number" placeholder="rating"> <br>
+        <input id="typename" type="text" placeholder="typename"> <br>
+        <input id="aid" type="number" placeholder="aid"> <br>
+    </form>
+    <button id="submit" onclick="create()">Submit</button>
+
+    <script>
+        url = "http://localhost:8080/create-recipe?"
+        function create() {
+            let data = {
+                rid: document.getElementById("rid").value,
+                name: document.getElementById("name").value,
+                content: document.getElementById("content").value,
+                cooking_time: document.getElementById("cooking_time").value,
+                rating: document.getElementById("rating").value,
+                typename: document.getElementById("typename").value,
+                aid: document.getElementById("aid").value,
+                date: new Date().getTime();
+            }
+            url = url + serialize(data);
+            console.log(url);
+            console.log($.get(url));
+        }
+        
+        serialize = function(obj) {
+        var str = [];
+        for (var p in obj)
+            if (obj.hasOwnProperty(p)) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+        return str.join("&");
+        }
+    </script>
+</body>
+
+</html>
