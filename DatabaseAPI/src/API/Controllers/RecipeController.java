@@ -1,12 +1,14 @@
 package API.Controllers;
 
 import Database.RecipeTable;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Date;
 
+@Controller
 public class RecipeController {
 
     @GetMapping("/create-recipe")
