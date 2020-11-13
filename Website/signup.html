@@ -23,8 +23,8 @@
     <button id="submit" onclick="signup()">Submit</button>
 
     <script>
-        url = "http://localhost:8080/create-account?"
         function signup() {
+            url = "http://localhost:8080/create-account?"
             let data = {
                 aid: document.getElementById("aid").value,
                 username: document.getElementById("username").value,
