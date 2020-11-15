@@ -1,5 +1,6 @@
 package API.Controllers;
 
+import Database.PostTable;
 import Database.RecipeTable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,22 @@ public class RecipeController {
     @ResponseBody
     public String getAverageRating() {
         return RecipeTable.averageRating();
+    }
+
+    @GetMapping("/post-comment")
+    @ResponseBody
+    public String postComment(
+            @RequestParam(name="cid") Integer cid,
+            @RequestParam(name="rid") Integer rid,
+            @RequestParam(name="aid") Integer aid,
+            @RequestParam(name="date") Long millis,
+            @RequestParam(name="title") String commentTitle,
+            @RequestParam(name="rating") Integer rating,
+            @RequestParam(name="content") String commentContent
+    ) {
+        Date date = new Date(millis);
+        boolean didPost = PostTable.insert(cid,rid,aid,date,commentTitle,commentContent,rating);
+        return didPost ? "Success" : "Failed";
     }
 
 }
