@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.sql.Date;
 
 @Controller
-public class AccountController {
+public class
+AccountController {
 
     @GetMapping("/create-account")
     @ResponseBody
