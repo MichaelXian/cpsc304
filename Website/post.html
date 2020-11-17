@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Comment</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div>
+        <form>
+            <label>Post your comment here:</label>
+            <input id="cid" type="number" placeholder="cid"> <br>
+            <input id="rid" type="number" placeholder="rid"> <br>
+            <input id="aid" type="number" placeholder="aid"> <br>
+            <input id="commentTitle" type="text" placeholder="title"> <br>
+            <input id="rating" type="number" placeholder="rating"> <br>
+            <input id="commentContent" type="text" placeholder="content"> <br>
+        </form>
+        <button id="submit" onclick="postComment()">Submit</button>
+    </div>
+
+    <script>
+        function postComment() {
+            url = "http://localhost:8080/post-comment?";
+            let data = {
+                cid:document.getElementById('cid').value,
+                aid:document.getElementById('aid').value,
+                rid:document.getElementById('rid').value,
+                date: new Date().getTime(),
+                title:document.getElementById('commentTitle').value,
+                content:document.getElementById('commentContent').value,
+                rating:document.getElementById('rating').value,
+            }
+            url = url+serialize(data);
+            console.log(url);
+            console.log($.get(url));
+        }
+        serialize = function(obj) {
+            var str = [];
+            for (var p in obj)
+                if (obj.hasOwnProperty(p)) {
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                }
+            return str.join("&");
+        }
+    </script>
+</body>
+</html>
