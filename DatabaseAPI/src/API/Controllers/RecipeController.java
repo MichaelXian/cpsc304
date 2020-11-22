@@ -49,4 +49,14 @@ public class RecipeController {
         return didPost ? "Success" : "Failed";
     }
 
+    @GetMapping("/select-recipe")
+    @ResponseBody
+    public String selectRecipe(
+            @RequestParam(name="lo") Integer lo,
+            @RequestParam(name="hi") Integer hi
+    ) {
+        return RecipeTable.listRecipeWRating(lo,hi);
+    }
+
+
 }
