@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Select Recipe</title>
+</head>
+<body>
+    <div>
+        <form>
+            <label>Select the range of the rating; you will see all the recipe that has the rating in that range</label>
+            <label>Lower bound</label>
+            <input id="lo" type="number" placeholder="0">
+            <label>Upper bound</label>
+            <input id="hi" type="number" placeholder="0"> <br>
+        </form>
+        <button id="submit" onclick="selectRecipe()">Submit</button>
+        <p class="data"></p>
+    </div>
+
+    <script>
+        function selectRecipe() {
+            let url = "http://localhost:8080/select-recipe?";
+            console.log(url);
+            let d = {
+                lo: document.getElementById("lo").value,
+                hi: document.getElementById("hi").value
+            }
+            url = url + serialize(d);
+            console.log($.get(url, function(data) {
+                console.log(data);
+                document.getElementsByClassName("data").value = data;
+            }));
+        }
+
+        serialize = function(obj) {
+            var str = [];
+            for (var p in obj)
+                if (obj.hasOwnProperty(p)) {
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                }
+            return str.join("&");
+        }
+    </script>
+</body>
+</html>
