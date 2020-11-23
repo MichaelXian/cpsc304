@@ -11,15 +11,28 @@
 </head>
 <body>
     <div>
+        <h1> Select Recipe With Rating Range</h1>
         <form>
             <label>Select the range of the rating; you will see all the recipe that has the rating in that range</label>
             <label>Lower bound</label>
-            <input id="lo" type="number" placeholder="0">
+            <input id="rating-lo" type="number" placeholder="0">
             <label>Upper bound</label>
-            <input id="hi" type="number" placeholder="0"> <br>
+            <input id="rating-hi" type="number" placeholder="0"> <br>
         </form>
-        <button id="submit" onclick="selectRecipe()">Submit</button>
-        <p class="data"></p>
+        <button id="submit-rating" onclick="selectRecipe()">Submit</button>
+
+        <h1> Select Recipe With Cooking Time Interval</h1>
+        <form>
+            <label>Select the range of the cooking time</label>
+            <label>Lower bound</label>
+            <input id="time-lo" type="number" placeholder="0">
+            <label>Upper bound</label>
+            <input id="time-hi" type="number" placeholder="0"> <br>
+        </form>
+        <button id="submit-time" onclick="findRecipeWithTimeRange()">Submit</button>
+
+        <hr>
+        <p class="data">Your Result will show up here</p>
     </div>
 
     <script>
@@ -27,8 +40,22 @@
             let url = "http://localhost:8080/select-recipe?";
             console.log(url);
             let d = {
-                lo: document.getElementById("lo").value,
-                hi: document.getElementById("hi").value
+                lo: document.getElementById("rating-lo").value,
+                hi: document.getElementById("rating-hi").value
+            }
+            url = url + serialize(d);
+            console.log($.get(url, function(data) {
+                console.log(data);
+                document.getElementsByClassName("data").value = data;
+            }));
+        }
+
+        function findRecipeWithTimeRange() {
+            let url = "http://localhost:8080/find-recipe-with-time?";
+            console.log(url);
+            let d = {
+                lo: document.getElementById("time-lo").value,
+                hi: document.getElementById("time-hi").value
             }
             url = url + serialize(d);
             console.log($.get(url, function(data) {

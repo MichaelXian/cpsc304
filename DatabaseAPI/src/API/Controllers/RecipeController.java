@@ -58,5 +58,13 @@ public class RecipeController {
         return RecipeTable.listRecipeWRating(lo,hi);
     }
 
+    @GetMapping("/find-recipe-with-time")
+    @ResponseBody
+    public String findRecipeWTime(
+            @RequestParam(name="lo") Integer lo,
+            @RequestParam(name="hi") Integer hi
+    ) {
+        return RecipeTable.listRecipeWTimeInRange(lo, hi);
+    }
 
 }
