@@ -90,6 +90,28 @@ public class RecipeTable {
         }
     }
 
+    /** Join Query */
+    public static String listRecipeWTimeInRange(int lo, int hi) {
+        try (Connection connection = ConnectionFactory.createConnection()) {
+            StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.append("SELECT r.rid, r.name, c.cooking_time")
+                    .append("FROM recipe r, content c")
+                    .append("WHERE ").append(lo).append("<= c.cooking_time AND c.cooking_time <=").append(hi)
+                    .append(" AND r.content = c.content");
+            Statement statement = connection.createStatement();
+            ResultSet res = statement.executeQuery(queryBuilder.toString());
+            HashMap<String, String> table = new HashMap<>();
+            table.put("Recipe ID", "rid");
+            table.put("Name", "name");
+            table.put("Time", "cooking_time");
+            return render(res, table);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     /**
      * Private helper function that renders html elements
      * @param result the query result set
@@ -128,4 +150,6 @@ public class RecipeTable {
         System.out.println(table.toString());
         return table.toString();
     }
+
+
 }
