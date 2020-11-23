@@ -65,7 +65,7 @@ public class RecipeTable {
     }
 
     /**
-     * Selection Query, lists all recipes that satisfy:
+     * Selection & Projection Query, lists all recipes that satisfy:
      * @param lo user defined lower bound, inclusive
      * @param hi user defined upper bound, inclusive
      * @return HTML string
@@ -73,13 +73,15 @@ public class RecipeTable {
     public static String listRecipeWRating(int lo, int hi) {
         try (Connection connection = ConnectionFactory.createConnection()) {
             StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.append("SELECT r.rid")
+            queryBuilder.append("SELECT r.rid, r.name, r.rating")
                     .append("FROM recipe r")
                     .append("WHERE ").append(lo).append("<= r.rating AND r.rating <=").append(hi);
             Statement statement = connection.createStatement();
             ResultSet res = statement.executeQuery(queryBuilder.toString());
             HashMap<String, String> table = new HashMap<>();
-            table.put("Rating ID", "rid");
+            table.put("Recipe ID", "rid");
+            table.put("Name", "name");
+            table.put("Rating", "rating");
             return render(res, table);
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,7 +102,7 @@ public class RecipeTable {
         // Also too lazy to make it an actual table in the frontend, I'd rather just print out a string
         // that looks like a table lmao
 
-        /* Origin: */
+        /* Original version: */
 //        StringBuilder table = new StringBuilder(String.format("\n%-10s%-10s", "FoodType", "Average Rating"));
 //        while (result.next()) {
 //            String foodtype = result.getString("typename");
