@@ -55,7 +55,7 @@ public class RecipeTable {
 
             HashMap<String, String> table = new HashMap<>();
             table.put("FoodType", "typename");
-            table.put("Average Rating", "AVG(rating");
+            table.put("Average Rating", "AVG(rating)");
             return render(result, table);
         } catch (Exception e) {
             e.printStackTrace();
@@ -151,5 +151,32 @@ public class RecipeTable {
         return table.toString();
     }
 
+    /* division */
+    public static String commented() {
+        try (Connection connection = ConnectionFactory.createConnection()) {
+            String query =
+                    "SELECT r.name " +
+                            "FROM recipe r " +
+                            "WHERE NOT EXISTS ( " +
+                                "(SELECT DISTINCT p.aid " +
+                                    "FROM Post p " +
+                                    "WHERE p.aid NOT IN (" +
+                                        "SELECT p2.aid " +
+                                        "FROM Post p2 " +
+                                        "WHERE p2.rid = r.rid) " +
+                                ")" +
+                            ")";
+            System.out.println(query);
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
 
+            HashMap<String, String> table = new HashMap<>();
+            table.put("Name", "r.name");
+            return render(result, table);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

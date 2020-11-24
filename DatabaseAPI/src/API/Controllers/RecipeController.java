@@ -67,4 +67,9 @@ public class RecipeController {
         return RecipeTable.listRecipeWTimeInRange(lo, hi);
     }
 
+    @GetMapping("/find-recipe-commented-by-all")
+    @ResponseBody
+    public String findCommented() {
+        return RecipeTable.commented();
+    }
 }
