@@ -12,17 +12,18 @@ public class CommentContent {
 
     public static boolean insert(String commentTitle, Date date, String commentContent){
         try (Connection connection = ConnectionFactory.createConnection()) {
-            String commentRatingQuery = "INSERT INTO CommentRating VALUES(?,?,?)";
+            String commentRatingQuery = "INSERT INTO CommentContent VALUES(?,?,?)";
             PreparedStatement statement = new StatementBuilder(connection, commentRatingQuery)
                     .str(commentTitle)
                     .date(date)
                     .str(commentContent)
                     .build();
-            return statement.execute();
+            statement.execute();
         } catch (Exception e) {
             e.getStackTrace();
             System.out.println(e.getMessage());
             return false;
         }
+        return true;
     }
 }
