@@ -67,6 +67,12 @@ public class RecipeController {
         return RecipeTable.listRecipeWTimeInRange(lo, hi);
     }
 
+    @GetMapping("/average-rating-fast")
+    @ResponseBody
+    public String averageRatingOfFastFood() {
+        return RecipeTable.averageRatingOfFastFood();
+    }
+
     @GetMapping("/find-recipe-commented-by-all")
     @ResponseBody
     public String findCommented() {

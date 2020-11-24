@@ -15,6 +15,8 @@
     <br><br><br>
     <h1>Get the average rating of recipes of each foodtype</h1>
     <button id="submit" onclick="getAverage()">Get average</button>
+    <h1>Get the average rating of recipes of the food type that have average cooking time under 10mins (fast food)</h1>
+    <button id="submit-fast" onclick="getAverageOfFast()">Get average of Fast Food</button>
     <br>
     <textarea id="output" rows=10 cols=100></textarea>
 
@@ -28,7 +30,16 @@
                 //alert("The average rating of all recipes is: " + data);
             }));
         }
-        
+
+        function getAverageOfFast() {
+            url = "http://localhost:8080/average-rating-fast"
+            console.log(url);
+            console.log($.get(url, function(data) {
+                console.log(data);
+                document.getElementById("output").textContent = data;
+            }));
+        }
+
         serialize = function(obj) {
         var str = [];
         for (var p in obj)

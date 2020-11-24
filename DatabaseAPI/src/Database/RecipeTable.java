@@ -112,6 +112,31 @@ public class RecipeTable {
         }
     }
 
+    /* Aggregation with Having */
+    /* we define fast food as: the average cookiing time of such food does not exceed 10min */
+    public static String averageRatingOfFastFood() {
+        try (Connection connection = ConnectionFactory.createConnection()) {
+            String query =
+                    "SELECT c.typename, AVG(rating) " +
+                            "FROM recipe r, content c, foodtype f " +
+                            "WHERE r.content = c.content AND c.Typename = f.Typename " +
+                            "GROUP BY c.typename " +
+                            "HAVING AVG(c.cook_time) < 600000";
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            HashMap<String, String> table = new HashMap<>();
+            table.put("FoodType", "typename");
+            table.put("Average Rating", "AVG(rating)");
+            return render(result, table);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+
     /**
      * Private helper function that renders html elements
      * @param result the query result set
