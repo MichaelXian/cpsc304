@@ -37,4 +37,20 @@ public final class AccountTable {
         return true;
     }
 
+    public static boolean updatePassword(Integer aid, String password) {
+        try (Connection connection = ConnectionFactory.createConnection()) {
+            String query = "UPDATE Account SET password= ? WHERE aid = ?";
+            PreparedStatement statement = new StatementBuilder(connection, query)
+                    .str(password)
+                    .integer(aid)
+                    .build();
+            statement.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
 }

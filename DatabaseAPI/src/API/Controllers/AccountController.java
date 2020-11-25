@@ -25,4 +25,12 @@ AccountController {
         boolean success = AccountTable.insert(aid, username, first_name, last_name, password, date, address);
         return success ? "Success!" : "Failed";
     }
+
+    @GetMapping("/update-password")
+    @ResponseBody
+    public String updateName(@RequestParam(name="aid") Integer aid,
+                             @RequestParam(name="password") String password) {
+        boolean success = AccountTable.updatePassword(aid, password);
+        return success ? "Success!" : "Failed";
+    }
 }
