@@ -12,8 +12,8 @@ public class CommentContent {
 
     public static boolean insert(String commentTitle, Date date, String commentContent){
         try (Connection connection = ConnectionFactory.createConnection()) {
-            String commentRatingQuery = "INSERT INTO CommentContent VALUES(?,?,?)";
-            PreparedStatement statement = new StatementBuilder(connection, commentRatingQuery)
+            String commentCommentQuery = "INSERT INTO CommentContent VALUES(?,?,?)";
+            PreparedStatement statement = new StatementBuilder(connection, commentCommentQuery)
                     .str(commentTitle)
                     .date(date)
                     .str(commentContent)

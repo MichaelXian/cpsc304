@@ -18,7 +18,8 @@ public final class RecipeOfTheDayTable {
                     .str(name)
                     .integer(rid)
                     .build();
-            return statement.execute();
+            statement.execute();
+            return true;
         } catch (Exception e) {
             e.getStackTrace();
             System.out.println(e.getMessage());

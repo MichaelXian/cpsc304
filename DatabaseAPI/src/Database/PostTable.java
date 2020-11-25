@@ -33,7 +33,8 @@ public class PostTable {
             if (!CommentContent.insert(commentTitle, date, commentContent)) return false;
             /* insert comment rating */
             if (!CommentRating.insert(commentTitle, rid, rating)) return false;
-            return statement.execute();
+            statement.execute();
+            return true;
         } catch (Exception e) {
             e.getStackTrace();
             System.out.println(e.getMessage());
