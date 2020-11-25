@@ -1,13 +1,9 @@
 package Database;
 
 import Database.Statements.StatementBuilder;
-import oracle.ucp.common.waitfreepool.Tuple;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.HashMap;
-import java.util.List;
 
 public class RecipeTable {
 
@@ -161,7 +157,7 @@ public class RecipeTable {
         /* format the table header */
         StringBuilder table = new StringBuilder("\n");
         for (String key: titles.keySet()) {
-            table.append(String.format("%-10s", titles.get(key)));
+            table.append(String.format("%-10s", key));
         }
 
         while (result.next()) {
@@ -196,7 +192,7 @@ public class RecipeTable {
             ResultSet result = statement.executeQuery(query);
 
             HashMap<String, String> table = new HashMap<>();
-            table.put("Name", "r.name");
+            table.put("Recipe name", "r.name");
             return render(result, table);
         } catch (Exception e) {
             e.printStackTrace();
