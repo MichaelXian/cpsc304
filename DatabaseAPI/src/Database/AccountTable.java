@@ -53,4 +53,17 @@ public final class AccountTable {
         return true;
     }
 
+    public static boolean deleteAccount(Integer aid) {
+        try (Connection connection = ConnectionFactory.createConnection()) {
+            String query = "DELETE FROM Account WHERE aid = ?";
+            PreparedStatement statement = new StatementBuilder(connection, query)
+                    .integer(aid)
+                    .build();
+            statement.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;    }
 }

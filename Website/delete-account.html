@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <a href="index.html"><h1>Back</h1></a>
+    <br><br><br>
+    <form>
+        <input id="aid" type="number" placeholder="aid"> <br>
+    </form>
+    <button id="submit" onclick="sendRequest()">Submit</button>
+
+    <script>
+        function sendRequest() {
+            url = "http://localhost:8080/delete-account?"
+            let data = {
+                aid: document.getElementById("aid").value,
+            }
+            console.log(data)
+            url = url + serialize(data);
+            console.log(url);
+            console.log($.get(url));
+        }
+        
+        serialize = function(obj) {
+        var str = [];
+        for (var p in obj)
+            if (obj.hasOwnProperty(p)) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+        return str.join("&");
+        }
+    </script>
+</body>
+
+</html>

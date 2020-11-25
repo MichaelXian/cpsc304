@@ -33,4 +33,11 @@ AccountController {
         boolean success = AccountTable.updatePassword(aid, password);
         return success ? "Success!" : "Failed";
     }
+
+    @GetMapping("/delete-account")
+    @ResponseBody
+    public String deleteAccount(@RequestParam(name="aid") Integer aid) {
+        boolean success = AccountTable.deleteAccount(aid);
+        return success ? "Success!" : "Failed";
+    }
 }
