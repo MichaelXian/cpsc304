@@ -117,7 +117,7 @@ public class RecipeTable {
                             "FROM recipe r, content c, foodtype f " +
                             "WHERE r.content = c.content AND c.Typename = f.Typename " +
                             "GROUP BY c.typename " +
-                            "HAVING AVG(c.cook_time) < 600000";
+                            "HAVING AVG(c.cooking_time) < 35";
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
 
@@ -139,13 +139,14 @@ public class RecipeTable {
         try (Connection connection = ConnectionFactory.createConnection()) {
             String query =
                     "SELECT t.typename, AVG(t.rating) " +
-                            "FROM" +
-                            "  (SELECT c.typename, AVG(rating) AS average" +
+                            "FROM " +
+                            "  (SELECT c.typename, AVG(r.rating) AS average " +
                             "   From recipe r, content c, foodtype f " +
-                            "   WHERE r.content = c.contnet AND c.Typename = f.Typename" +
+                            "   WHERE r.content = c.content AND c.Typename = f.Typename " +
                             "   GROUP BY c.typename) AS t " +
                             "WHERE t.average = (" +
                             "SELECT MAX(t.average) FROM t)";
+            System.out.println(query);
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
 
@@ -187,14 +188,14 @@ public class RecipeTable {
         /* format the table header */
         StringBuilder table = new StringBuilder("\n");
         for (String key: titles.keySet()) {
-            table.append(String.format("%-10s", key));
+            table.append(String.format("%-30s", key));
         }
 
         while (result.next()) {
             StringBuilder row = new StringBuilder("\n");
             for (String val: titles.values()) {
                 String elem = result.getString(val);
-                row.append(String.format("%-10s", elem));
+                row.append(String.format("%-30s", elem));
             }
             table.append(row.toString());
         }
@@ -210,13 +211,13 @@ public class RecipeTable {
                             "FROM recipe r " +
                             "WHERE NOT EXISTS ( " +
                                 "(SELECT DISTINCT p.aid " +
-                                    "FROM Post p " +
-                                    "WHERE p.aid NOT IN (" +
-                                        "SELECT p2.aid " +
-                                        "FROM Post p2 " +
-                                        "WHERE p2.rid = r.rid) " +
-                                ")" +
-                            ")";
+                    "FROM Post p " +
+                    "WHERE p.aid NOT IN (" +
+                    "SELECT p2.aid " +
+                    "FROM Post p2 " +
+                    "WHERE p2.rid = r.rid) " +
+                    ")" +
+                    ")";
             System.out.println(query);
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
