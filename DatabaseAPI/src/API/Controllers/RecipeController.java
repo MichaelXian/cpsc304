@@ -73,6 +73,10 @@ public class RecipeController {
         return RecipeTable.averageRatingOfFastFood();
     }
 
+    @GetMapping("/best-food")
+    @ResponseBody
+    public String bestFood() {return RecipeTable.bestFoodType();}
+
     @GetMapping("/find-recipe-commented-by-all")
     @ResponseBody
     public String findCommented() {

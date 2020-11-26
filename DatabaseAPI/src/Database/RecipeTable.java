@@ -132,6 +132,36 @@ public class RecipeTable {
         }
     }
 
+    /* Nested Aggregation */
+    /* we define fast food as: the average cookiing time of such food does not exceed 10min */
+    /* find the food type which the average of the rating of this food type is the maximum over all food types */
+    public static String bestFoodType() {
+        try (Connection connection = ConnectionFactory.createConnection()) {
+            String query =
+                    "SELECT t.typename, AVG(t.rating) " +
+                            "FROM" +
+                            "  (SELECT c.typename, AVG(rating) AS average" +
+                            "   From recipe r, content c, foodtype f " +
+                            "   WHERE r.content = c.contnet AND c.Typename = f.Typename" +
+                            "   GROUP BY c.typename) AS t " +
+                            "WHERE t.average = (" +
+                            "SELECT MAX(t.average) FROM t)";
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            HashMap<String, String> table = new HashMap<>();
+            table.put("FoodType", "typename");
+            table.put("Average Rating", "AVG(rating)");
+            return render(result, table);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+
+
 
     /**
      * Private helper function that renders html elements

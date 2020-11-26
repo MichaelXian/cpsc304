@@ -13,20 +13,18 @@ public final class AccountTable {
     public static boolean insert(Integer aid, String username, String firstName, String lastName, String password, Date date_of_birth, String address) {
         try (Connection connection = ConnectionFactory.createConnection()) {
             // Setup AccountInsert Query
-            String accountInsertQuery = "INSERT INTO Account VALUES(?, ?, ?, ?, ?)";
+            String accountInsertQuery = "INSERT INTO Account VALUES(?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement accountStatement = new StatementBuilder(connection, accountInsertQuery)
                     .integer(aid)
                     .str(username)
                     .str(firstName)
                     .str(lastName)
-                    .str(password).build();
+                    .str(password)
+                    .str(address)
+                    .date(date_of_birth)
+                    .build();
 
-            // Insert PersonalInfo
-            if (!PersonalInfoTable.insert(firstName, lastName, date_of_birth, address)) {
-                // If failed to insert PersonalInfo, exit
-                return false;
-            }
-
+            // Removed PersonalInfo
             // Execute Account insert
             accountStatement.execute();
         } catch (Exception e) {

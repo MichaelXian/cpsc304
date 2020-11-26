@@ -31,6 +31,9 @@
         </form>
         <button id="submit-time" onclick="findRecipeWithTimeRange()">Submit</button>
 
+        <h1> See best food type</h1>
+        <button id="submit-best" onclick="bestFood()">See best food type</button>
+
         <hr>
         <p class="data">Your Result will show up here</p>
     </div>
@@ -48,6 +51,14 @@
                 console.log(data);
                 document.getElementsByClassName("data").value = data;
             }));
+        }
+
+        function bestFood() {
+            let url = "http://localhost:8080/best-food";
+            console.log($.get(url, function (data) {
+                console.log(data);
+                document.getElementsByClassName("data").value = data;
+            }))
         }
 
         function findRecipeWithTimeRange() {
