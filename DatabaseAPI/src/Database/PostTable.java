@@ -20,19 +20,18 @@ public class PostTable {
             Integer rating
     ) {
         try (Connection connection = ConnectionFactory.createConnection()) {
-            String postQuery = "INSERT INTO Post VALUES(?,?,?,?,?)";
+            String postQuery = "INSERT INTO Post VALUES(?,?,?,?,?,?,?)";
             PreparedStatement statement = new StatementBuilder(connection, postQuery)
                     .integer(cid)
                     .integer(rid)
                     .integer(aid)
                     .date(date)
+                    .integer(rating)
+                    .str(commentContent)
                     .str(commentTitle)
                     .build();
 
-            /* insert comment content */
-            if (!CommentContent.insert(commentTitle, date, commentContent)) return false;
-            /* insert comment rating */
-            if (!CommentRating.insert(commentTitle, rid, rating)) return false;
+            // Removed CommentContent and CommentRating
             statement.execute();
             return true;
         } catch (Exception e) {
