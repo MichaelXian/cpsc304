@@ -211,13 +211,13 @@ public class RecipeTable {
                             "FROM recipe r " +
                             "WHERE NOT EXISTS ( " +
                                 "(SELECT DISTINCT p.aid " +
-                    "FROM Post p " +
-                    "WHERE p.aid NOT IN (" +
-                    "SELECT p2.aid " +
-                    "FROM Post p2 " +
-                    "WHERE p2.rid = r.rid) " +
-                    ")" +
-                    ")";
+                                    "FROM Post p " +
+                                    "WHERE p.aid NOT IN (" +
+                                        "SELECT p2.aid " +
+                                        "FROM Post p2 " +
+                                        "WHERE p2.rid = r.rid) " +
+                                ")" +
+                            ")";
             System.out.println(query);
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
