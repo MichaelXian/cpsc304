@@ -69,8 +69,8 @@ public class RecipeTable {
     public static String listRecipeWRating(int lo, int hi) {
         try (Connection connection = ConnectionFactory.createConnection()) {
             StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.append("SELECT r.rid, r.name, r.rating")
-                    .append("FROM recipe r")
+            queryBuilder.append("SELECT r.rid, r.name, r.rating ")
+                    .append("FROM recipe r ")
                     .append("WHERE ").append(lo).append("<= r.rating AND r.rating <=").append(hi);
             Statement statement = connection.createStatement();
             ResultSet res = statement.executeQuery(queryBuilder.toString());
@@ -90,9 +90,9 @@ public class RecipeTable {
     public static String listRecipeWTimeInRange(int lo, int hi) {
         try (Connection connection = ConnectionFactory.createConnection()) {
             StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.append("SELECT r.rid, r.name, c.cooking_time")
-                    .append("FROM recipe r, content c")
-                    .append("WHERE ").append(lo).append("<= c.cooking_time AND c.cooking_time <=").append(hi)
+            queryBuilder.append("SELECT r.rid, r.name, c.cooking_time ")
+                    .append("FROM recipe r, content c ")
+                    .append("WHERE ").append(lo).append("<= c.cooking_time AND c.cooking_time <= ").append(hi)
                     .append(" AND r.content = c.content");
             Statement statement = connection.createStatement();
             ResultSet res = statement.executeQuery(queryBuilder.toString());
