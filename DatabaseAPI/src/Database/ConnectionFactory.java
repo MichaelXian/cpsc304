@@ -11,7 +11,7 @@ public final class ConnectionFactory {
     }
 
     public static Connection createConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/cookingsite", "root", "root");
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "root");
     }
 
 }
