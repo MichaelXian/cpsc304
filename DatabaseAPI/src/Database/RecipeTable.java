@@ -137,22 +137,25 @@ public class RecipeTable {
     /* find the food type which the average of the rating of this food type is the maximum over all food types */
     public static String bestFoodType() {
         try (Connection connection = ConnectionFactory.createConnection()) {
+            String createView = "CREATE OR REPLACE VIEW t AS \n" +
+                    "\t(SELECT c.typename, AVG(r.rating) AS average    \n" +
+                    "\t From recipe r, content c, foodtype f\n" +
+                    "     WHERE r.content = c.content AND c.Typename = f.Typename\n" +
+                    "     GROUP BY c.typename)";
+
+            connection.createStatement().execute(createView);
             String query =
-                    "SELECT t.typename, AVG(t.rating) " +
-                            "FROM " +
-                            "  (SELECT c.typename, AVG(r.rating) AS average " +
-                            "   From recipe r, content c, foodtype f " +
-                            "   WHERE r.content = c.content AND c.Typename = f.Typename " +
-                            "   GROUP BY c.typename) AS t " +
-                            "WHERE t.average = (" +
-                            "SELECT MAX(t.average) FROM t)";
+                    "SELECT t.typename, t.average\n" +
+                    "FROM t \n" +
+                    "WHERE t.average = (SELECT MAX(t.average) FROM t);";
             System.out.println(query);
+
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
 
             HashMap<String, String> table = new HashMap<>();
             table.put("FoodType", "typename");
-            table.put("Average Rating", "AVG(rating)");
+            table.put("Average Rating", "average");
             return render(result, table);
         } catch (Exception e) {
             e.printStackTrace();
